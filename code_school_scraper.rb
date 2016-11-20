@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'watir-webdriver'
 require 'open-uri'
 require 'open_uri_redirections'
+require 'headless'
 
 class CodeSchoolDownloader
   attr_accessor :browser
@@ -9,10 +10,12 @@ class CodeSchoolDownloader
   TIMEOUT = 0
 
   def initialize username, password
+    Headless.ly do
     @browser = Watir::Browser.new
     login username, password
     create_dir DOWNLOAD_LOCATION
-    download_videos
+    download_videos 
+    end
   end
 
   def download_videos
